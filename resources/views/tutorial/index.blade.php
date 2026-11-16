@@ -1,15 +1,20 @@
 @extends('layouts.tutorial')
 
-@section('title', 'Belajar Laravel 30 Hari — Laravel 13')
+@section('title', "{$course['title']} — Kurikulum")
 
 @section('topbar')
 <header class="topbar">
     <div class="topbar-left">
-        <span class="topbar-brand-mini">Laravel 13 • 30 Hari</span>
+        <a href="{{ route('tutorial.home') }}" class="topbar-back-btn" title="Kembali ke Daftar Tema Tutorial">
+            &lsaquo;
+        </a>
+        <span class="topbar-brand-mini">{{ $course['short_title'] }}</span>
     </div>
     <div class="topbar-home-title">
-        <span>Modul Pembelajaran & Praktikum Terstruktur</span>
-        <a href="{{ route('tutorial.show', 1) }}" class="badge-laravel">Mulai Hari 1 →</a>
+        <span>Kurikulum &amp; Daftar Isi ({{ $totalDays }} Hari)</span>
+        <a href="{{ route('tutorial.show', ['slug' => $course['slug'], 'day' => 1]) }}" class="badge-laravel">
+            Mulai Hari 1 &rarr;
+        </a>
     </div>
 </header>
 @endsection
@@ -17,14 +22,12 @@
 @section('content')
 <main class="home-container">
     <section class="hero-card">
-        <span class="hero-eyebrow">Kurikulum Lengkap • Laravel 13 & PHP 8.3+</span>
-        <h1 class="hero-title">Belajar Laravel 30 Hari: Dari Dasar Hingga Deployment GitHub</h1>
-        <p class="hero-subtitle">
-            Studi kasus lengkap membangun Aplikasi Manajemen Catatan Pribadi berbasis Laravel 13, MySQL, Bootstrap 5, dan Laravel Breeze. Disusun sistematis dalam 6 BAB (Hari 1 sampai Hari 30).
-        </p>
+        <span class="hero-eyebrow">{{ $course['badge'] }} &bull; {{ $course['level'] }}</span>
+        <h1 class="hero-title">{{ $course['title'] }}</h1>
+        <p class="hero-subtitle">{{ $course['description'] }}</p>
         <div class="hero-actions">
-            <a href="{{ route('tutorial.show', 1) }}" class="btn-hero-primary">
-                Mulai Belajar Hari 1 →
+            <a href="{{ route('tutorial.show', ['slug' => $course['slug'], 'day' => 1]) }}" class="btn-hero-primary">
+                Mulai Belajar Hari 1 &rarr;
             </a>
             <div class="progress-pill">
                 Progres Belajar: <span id="completed-count">0</span> / {{ $totalDays }} Hari Selesai
@@ -42,7 +45,7 @@
 
             <div class="day-grid">
                 @foreach($bab['days'] as $day)
-                    <a href="{{ route('tutorial.show', $day['day']) }}" class="day-card">
+                    <a href="{{ route('tutorial.show', ['slug' => $course['slug'], 'day' => $day['day']]) }}" class="day-card">
                         <div>
                             <div class="day-card-top">
                                 <span class="day-number">Hari {{ $day['day'] }}</span>

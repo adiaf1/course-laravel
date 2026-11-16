@@ -1,14 +1,14 @@
 @extends('layouts.tutorial')
 
-@section('title', "Hari {$currentDay['day']}: {$currentDay['title']} — Belajar Laravel 30 Hari")
+@section('title', "Hari {$currentDay['day']}: {$currentDay['title']} — {$course['short_title']}")
 
 @section('topbar')
 <header class="topbar">
     <div class="topbar-left">
-        <a href="{{ route('tutorial.index') }}" class="topbar-back-btn" title="Kembali ke Daftar Kurikulum">
+        <a href="{{ route('tutorial.course', $course['slug']) }}" class="topbar-back-btn" title="Kembali ke Daftar Kurikulum">
             &lsaquo;
         </a>
-        <span class="topbar-brand-mini">Laravel 13</span>
+        <span class="topbar-brand-mini">{{ $course['badge'] }}</span>
         <button type="button" id="sidebar-toggle-btn" class="sidebar-toggle-btn">
             Daftar Materi
         </button>
@@ -16,7 +16,7 @@
 
     <nav class="topbar-nav-split" aria-label="Navigasi Materi">
         @if($previousDay)
-            <a href="{{ route('tutorial.show', $previousDay['day']) }}" class="topbar-nav-btn">
+            <a href="{{ route('tutorial.show', ['slug' => $course['slug'], 'day' => $previousDay['day']]) }}" class="topbar-nav-btn">
                 &larr; Previous (Hari {{ $previousDay['day'] }})
             </a>
         @else
@@ -24,11 +24,11 @@
         @endif
 
         @if($nextDay)
-            <a href="{{ route('tutorial.show', $nextDay['day']) }}" class="topbar-nav-btn is-next">
+            <a href="{{ route('tutorial.show', ['slug' => $course['slug'], 'day' => $nextDay['day']]) }}" class="topbar-nav-btn is-next">
                 Next (Hari {{ $nextDay['day'] }}) &rarr;
             </a>
         @else
-            <a href="{{ route('tutorial.index') }}" class="topbar-nav-btn is-next">
+            <a href="{{ route('tutorial.course', $course['slug']) }}" class="topbar-nav-btn is-next">
                 Selesai &bull; Daftar Kurikulum &#10003;
             </a>
         @endif
@@ -40,10 +40,10 @@
 <div class="lesson-shell">
     <aside id="tutorial-sidebar" class="sidebar">
         <div class="sidebar-header">
-            <h2 class="sidebar-course-title">Pemrograman Dasar LARAVEL</h2>
+            <h2 class="sidebar-course-title">{{ $course['short_title'] }}</h2>
             <div class="sidebar-course-meta">
                 <span>Hari {{ $currentDay['day'] }} dari {{ $totalDays }}</span>
-                <span class="badge-laravel">Laravel 13</span>
+                <a href="{{ route('tutorial.home') }}" class="badge-laravel">Semua Tema</a>
             </div>
         </div>
 
@@ -60,7 +60,7 @@
                 </button>
                 <div class="bab-days">
                     @foreach($bab['days'] as $dayItem)
-                        <a href="{{ route('tutorial.show', $dayItem['day']) }}"
+                        <a href="{{ route('tutorial.show', ['slug' => $course['slug'], 'day' => $dayItem['day']]) }}"
                            class="sidebar-day-link {{ $dayItem['day'] === $currentDay['day'] ? 'is-active' : '' }}">
                             <span>Hari {{ $dayItem['day'] }}: {{ $dayItem['title'] }}</span>
                             <span class="day-done-dot" data-day-badge="{{ $dayItem['day'] }}"></span>
@@ -157,7 +157,7 @@
 
             @if(!empty($currentDay['tasks']))
                 <aside class="tasks-box">
-                    <h2 class="tasks-box-title">Tugas & Catatan Penting Hari {{ $currentDay['day'] }}</h2>
+                    <h2 class="tasks-box-title">Tugas &amp; Catatan Penting Hari {{ $currentDay['day'] }}</h2>
                     <ul>
                         @foreach($currentDay['tasks'] as $task)
                             <li>{{ $task }}</li>
@@ -168,24 +168,24 @@
 
             <nav class="lesson-footer-nav" aria-label="Navigasi Lanjut Materi">
                 @if($previousDay)
-                    <a href="{{ route('tutorial.show', $previousDay['day']) }}" class="nav-card-btn">
+                    <a href="{{ route('tutorial.show', ['slug' => $course['slug'], 'day' => $previousDay['day']]) }}" class="nav-card-btn">
                         <span class="nav-card-label">&larr; Materi Sebelumnya</span>
                         <span class="nav-card-title">Hari {{ $previousDay['day'] }}: {{ $previousDay['title'] }}</span>
                     </a>
                 @else
-                    <a href="{{ route('tutorial.index') }}" class="nav-card-btn">
+                    <a href="{{ route('tutorial.course', $course['slug']) }}" class="nav-card-btn">
                         <span class="nav-card-label">&larr; Kurikulum</span>
-                        <span class="nav-card-title">Daftar Isi 30 Hari</span>
+                        <span class="nav-card-title">Daftar Isi {{ $totalDays }} Hari</span>
                     </a>
                 @endif
 
                 @if($nextDay)
-                    <a href="{{ route('tutorial.show', $nextDay['day']) }}" class="nav-card-btn is-primary">
+                    <a href="{{ route('tutorial.show', ['slug' => $course['slug'], 'day' => $nextDay['day']]) }}" class="nav-card-btn is-primary">
                         <span class="nav-card-label">Lanjutkan Materi &rarr;</span>
                         <span class="nav-card-title">Hari {{ $nextDay['day'] }}: {{ $nextDay['title'] }}</span>
                     </a>
                 @else
-                    <a href="{{ route('tutorial.index') }}" class="nav-card-btn is-primary">
+                    <a href="{{ route('tutorial.course', $course['slug']) }}" class="nav-card-btn is-primary">
                         <span class="nav-card-label">Kurikulum Selesai &#10003;</span>
                         <span class="nav-card-title">Kembali ke Daftar Kurikulum</span>
                     </a>
