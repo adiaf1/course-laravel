@@ -1,0 +1,17 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: course-laravel-app
+    restart: unless-stopped
+    ports:
+      - "${APP_PORT:-8091}:80"
+    volumes:
+      - .:/var/www/html
+    networks:
+      - course-laravel-net
+
+networks:
+  course-laravel-net:
+    driver: bridge
