@@ -20,7 +20,7 @@
 @endsection
 
 @section('content')
-<main class="home-container">
+<main class="home-container" data-course-slug="{{ $course['slug'] }}">
     <section class="hero-card">
         <span class="hero-eyebrow">{{ $course['badge'] }} &bull; {{ $course['level'] }}</span>
         <h1 class="hero-title">{{ $course['title'] }}</h1>

@@ -14,7 +14,9 @@
 
     <script>
         (function () {
-            const STORAGE_KEY = 'laravel30_completed_days';
+            const slugEl = document.querySelector('[data-course-slug]');
+            const courseSlug = slugEl ? slugEl.getAttribute('data-course-slug') : 'default';
+            const STORAGE_KEY = 'tutorial_completed_' + courseSlug;
 
             function getCompletedDays() {
                 try {

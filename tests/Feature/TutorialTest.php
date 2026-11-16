@@ -37,6 +37,22 @@ class TutorialTest extends TestCase
         }
     }
 
+    public function test_rest_api_course_and_fourteen_days_render_successfully(): void
+    {
+        $this->get('/kursus/laravel-rest-api')
+            ->assertStatus(200)
+            ->assertSee('Membangun RESTful API dengan Laravel 13 & Sanctum');
+
+        for ($day = 1; $day <= 14; $day++) {
+            $response = $this->get("/kursus/laravel-rest-api/hari/{$day}");
+
+            $response->assertStatus(200);
+            $response->assertSee("Hari {$day}:");
+        }
+
+        $this->get('/kursus/laravel-rest-api/hari/15')->assertStatus(404);
+    }
+
     public function test_legacy_day_url_redirects_to_course_day(): void
     {
         $this->get('/hari/1')->assertRedirect('/kursus/laravel-30-hari/hari/1');

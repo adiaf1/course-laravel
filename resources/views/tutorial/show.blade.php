@@ -37,7 +37,7 @@
 @endsection
 
 @section('content')
-<div class="lesson-shell">
+<div class="lesson-shell" data-course-slug="{{ $course['slug'] }}">
     <aside id="tutorial-sidebar" class="sidebar">
         <div class="sidebar-header">
             <h2 class="sidebar-course-title">{{ $course['short_title'] }}</h2>
@@ -134,6 +134,13 @@
                             </table>
                         </div>
                     </section>
+                @elseif($block['type'] === 'note')
+                    <aside class="note-box">
+                        @if(!empty($block['title']))
+                            <strong>{{ $block['title'] }}</strong>
+                        @endif
+                        <span>{{ $block['content'] }}</span>
+                    </aside>
                 @elseif($block['type'] === 'step')
                     <section class="step-card">
                         <div class="step-header">

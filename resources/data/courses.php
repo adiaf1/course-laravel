@@ -29,9 +29,9 @@ return [
         'short_title' => 'Laravel REST API',
         'badge' => 'Laravel 13 • API',
         'level' => 'Menengah',
-        'duration' => 'Segera Hadir',
-        'description' => 'Merancang endpoint API yang aman, autentikasi token Sanctum, API Resource, validasi, rate limiting, dan dokumentasi API.',
-        'status' => 'coming_soon',
-        'babs_path' => null,
+        'duration' => '14 Hari (4 BAB)',
+        'description' => 'Merancang endpoint API yang aman, autentikasi token Sanctum, API Resource, validasi, rate limiting, dan feature testing.',
+        'status' => 'published',
+        'babs_path' => resource_path('data/courses/laravel-rest-api'),
     ],
 ];
